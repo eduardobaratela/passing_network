@@ -237,3 +237,15 @@ def data_download():
     print ("Download completed")
 
 
+# adaptando coluna 'tags' para uma lista com valores
+def converting_tags(aux):
+    new = pd.Series()
+    try:
+        tags = []
+        for tag in aux:
+            tags.append(list(tag.values())[0])
+        new = tags
+    except IndexError:
+        return None
+
+    return new

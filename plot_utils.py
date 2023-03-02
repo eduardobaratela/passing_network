@@ -8,15 +8,13 @@ import numpy as np
 from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 import plotly.graph_objs as go
 
-data_folder = 'data/'
-tags_names_df = pd.read_csv(data_folder + 'tags2name.csv')
 
 def pitch():
     """
     code to plot a soccer pitch 
     """
     #create figure
-    fig,ax=plt.subplots(figsize=(7,5))
+    fig,ax=plt.subplots(figsize=(9,6))
     
     #Pitch Outline & Centre Line
     plt.plot([0,0],[0,100], color="black")
@@ -61,9 +59,6 @@ def pitch():
     plt.xlim(0,100)
     plt.ylim(0,100)
     
-    ax.annotate("", xy=(25, 5), xytext=(5, 5),
-                arrowprops=dict(arrowstyle="->", linewidth=2))
-    ax.text(7,7,'Attack',fontsize=20)
     return fig,ax
 
 def draw_pitch(pitch, line, orientation, view, alpha=1):
