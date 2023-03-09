@@ -249,3 +249,27 @@ def converting_tags(aux):
         return None
 
     return new
+
+# trocar playerID em 'events' de substitutos para manter os 11 iniciais
+def sub_players(eventos, partidas):
+    subs_match = {}
+    for match, id in zip(partidas['teamsData'], partidas['wyId']):
+        subs = {}
+        for team in match.values():
+            for changes in team['formation']['substitutions']:
+                subs[changes['playerIn']] = changes['playerOut']
+        subs_match[id] = subs
+
+    #transformar dicionário com matchId / playerIn / playerOut em data frame
+    df_sub = pd.DataFrame(
+        [[k1, k2, v]
+        for k1,d in subs_match.items() 
+        for k2,v in d.items()],
+        columns=['matchId' , 'playerIn' , 'playerOut'])
+
+    eventos = eventos.merge(df_sub, how='left', left_on=['matchId', 'playerId'], right_on=['matchId', 'playerIn']).drop(['playerIn'], axis=1)
+
+    eventos['playerId'] = eventos['playerOut'].fillna(eventos['playerId'])
+    eventos.drop(['playerOut'], axis = 1, inplace=True)
+
+    return eventos

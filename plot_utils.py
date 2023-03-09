@@ -5,6 +5,7 @@ import pandas as pd
 import seaborn as sns
 from collections import Counter
 import numpy as np
+import networkx as nx
 from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 import plotly.graph_objs as go
 
